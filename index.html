@@ -1,7 +1,141 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <link href="mandalio.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <script src="mandalio.js" type="module"></script>
+    <title>Mandalio</title>
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <div id="banner-top">
+            <img id='lotus' src="lotus.png">
+            <h1 id="title">mandal.io</h1>
+        </div>
+        <div id="banner-bottom">
+            <a class="nav" style="padding-left: 5px">about</a>
+            <a class="nav">link2</a>
+            <a class="nav">other projects</a>
+        </div>
+    </header>
+    <!--banner is completed here, canvas begins-->
+    <div id="canvas-div">
+        <div id="button-div">
+            <button id='circle-overlay-button' class="overlay-button"><img id='circle-icon'
+                    src="circle icon.png"></button>
+            <button id='grid-overlay-button' class="overlay-button"><img id='grid-icon' src="grid icon.png"></button>
+            <button id="save-button" class="small-canvas-buttons">save</button>
+            <button id="clear-button" class="small-canvas-buttons">clear</button>
+            <button id="undo-button" class="small-canvas-buttons">undo</button>
+        </div>
+        <canvas id="main-canvas" width="900" height="900"></canvas>
+        <canvas id="clickable-canvas" width="900" height="900"></canvas>
+        <canvas id="circle-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
+        <canvas id="grid-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
+    </div>
+    <!--canvas ends here, explanation div begins-->
+    <div id="explanation-div">
+        <p id="explanation">A mandala, in particular a rangoli, is an artistic creation usually comprised of geometric
+            shapes and symbols. They are used often in Hindu and Buddhist festivals and also as a meditative aid, the
+            intent being to help one achieve a trance-like focus and cultivate aesthetic sensibility. A rangoli is made
+            by pouring coloured sands onto a surface. <br><br>This website allows you to create a mandala in a similar manner. It is
+            recommended that you don't value perfection too highly, and embrace any mistakes, though there is an undo
+            feature for modern convenience. Its best to fill the canvas with one colour before drawing and long sweeping
+            strokes are prefered.
+        </p>
+        <img id='mandala-image' src="https://upload.wikimedia.org/wikipedia/commons/5/57/Mandala_Rangoli.jpg">
+    </div>
+    <!--explanation div ends, small options div begins-->
+    <div id="small-options-div">
+        <h3 id="size-title">size</h3>
+        <input id="size-slider" type="range" min="5" max="100" step="1" value="10" orient="vertical">
+        <hr class="divider">
+        <h3 id="colour-title">colour</h3>
+        <select id="pallet-selector">
+            <option value="basic">basic</option>
+            <option value="sunset">sunset</option>
+            <option value="beach">beach</option>
+            <option value="winter">winter</option>
+            <option value="verdure">verdure</option>
+            <option value="royal purple">royal purple</option>
+            <option value="coffee">coffee</option>
+            <option value="anime girl">anime girl</option>
+            <option value="wimbledon">wimbledon</option>
+        </select>
+        <div id="colour-options-div">
+            <!--colour circles are placed here by JS-->
+        </div>
+    </div>
+</body>
+</html><!DOCTYPE html>
+<html>
+<head>
+    <link href="mandalio.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
+    <script src="mandalio.js" type="module"></script>
+    <title>Mandalio</title>
+</head>
+
+<body>
+    <header>
+        <div id="banner-top">
+            <img id='lotus' src="lotus.png">
+            <h1 id="title">mandal.io</h1>
+        </div>
+        <div id="banner-bottom">
+            <a class="nav" style="padding-left: 5px">about</a>
+            <a class="nav">link2</a>
+            <a class="nav">other projects</a>
+        </div>
+    </header>
+    <!--banner is completed here, canvas begins-->
+    <div id="canvas-div">
+        <div id="button-div">
+            <button id='circle-overlay-button' class="overlay-button"><img id='circle-icon'
+                    src="circle icon.png"></button>
+            <button id='grid-overlay-button' class="overlay-button"><img id='grid-icon' src="grid icon.png"></button>
+            <button id="save-button" class="small-canvas-buttons">save</button>
+            <button id="clear-button" class="small-canvas-buttons">clear</button>
+            <button id="undo-button" class="small-canvas-buttons">undo</button>
+        </div>
+        <canvas id="main-canvas" width="900" height="900"></canvas>
+        <canvas id="clickable-canvas" width="900" height="900"></canvas>
+        <canvas id="circle-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
+        <canvas id="grid-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
+    </div>
+    <!--canvas ends here, explanation div begins-->
+    <div id="explanation-div">
+        <p id="explanation">A mandala, in particular a rangoli, is an artistic creation usually comprised of geometric
+            shapes and symbols. They are used often in Hindu and Buddhist festivals and also as a meditative aid, the
+            intent being to help one achieve a trance-like focus and cultivate aesthetic sensibility. A rangoli is made
+            by pouring coloured sands onto a surface. <br><br>This website allows you to create a mandala in a similar manner. It is
+            recommended that you don't value perfection too highly, and embrace any mistakes, though there is an undo
+            feature for modern convenience. Its best to fill the canvas with one colour before drawing and long sweeping
+            strokes are prefered.
+        </p>
+        <img id='mandala-image' src="https://upload.wikimedia.org/wikipedia/commons/5/57/Mandala_Rangoli.jpg">
+    </div>
+    <!--explanation div ends, small options div begins-->
+    <div id="small-options-div">
+        <h3 id="size-title">size</h3>
+        <input id="size-slider" type="range" min="5" max="100" step="1" value="10" orient="vertical">
+        <hr class="divider">
+        <h3 id="colour-title">colour</h3>
+        <select id="pallet-selector">
+            <option value="basic">basic</option>
+            <option value="sunset">sunset</option>
+            <option value="beach">beach</option>
+            <option value="winter">winter</option>
+            <option value="verdure">verdure</option>
+            <option value="royal purple">royal purple</option>
+            <option value="coffee">coffee</option>
+            <option value="anime girl">anime girl</option>
+            <option value="wimbledon">wimbledon</option>
+        </select>
+        <div id="colour-options-div">
+            <!--colour circles are placed here by JS-->
+        </div>
+    </div>
 </body>
 </html>
