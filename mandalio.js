@@ -65,14 +65,14 @@ circleButton.click()
 
 let palletList = {
     'basic': ['#f37e21', '#29aae1', '#fbaf41', '#c7e9f3', '#b2d136', '#85328a', '#ec1563'],
-    'sunset': ['#B01E68', '#DC3535', '#F49D1A', '#FFE15D'],
-    'beach': ['#64abe3', '#bcdbf7', '#fed8b5', '#f9d09a'],
-    'winter': ['#0014FF', '#009EFF', '#00E7FF', '#00FFF6'],
-    'verdure': ['#523906', '#535204', '#62760C', '#CDB30C',],
-    'royal purple': ['#160040', '#4C0070', '#eae0cc', '#9A0680'],
+    'sunset': ['#240002', '#6f0100', '#a53005', '#d97e0c', '#fec135'],
+    'beach': ['#4d9ddb', '#66ffc6', '#ffe98c', '#ffa678', '#ff9595'],
+    'winter': ['#433452', '#948ab3', '#decade', '#f4ccc3', '#fcefca', '#1126a5'],
+    'verdure': ['#523906', '#535204', '#62760C', '#CDB30C', '#ebe695', '#271f2e'],
+    'royal purple': ['#160040', '#4C0070', '#eae0cc', '#9A0680', '#c39115'],
     'coffee': ['#FFFBE9', '#E3CAA5', '#3C2A21', '#AD8B73'],
-    'anime girl': ['#F6DEF6', '#c097c1', '#CFE5CF', '#ff88d0'],
-    'wimbledon': ['#6cce56', '#d84f4f', '#FFE3E1', '#FFF5E4'],
+    'anime girl': ['#F6DEF6', '#c097c1', '#CFE5CF', '#f0bae0'],
+    'wimbledon': ['#6cce56', '#d84f4f', '#FFE3E1', '#d5cbac'],
 }
 
 
@@ -142,7 +142,7 @@ palletSelector.addEventListener('input', (e) => {
         nodeToAppend.classList.add('colour-circle')
         nodeToAppend.classList.add('colour-button')
         nodeToAppend.style.backgroundColor = colour
-        if (colour == '#'+currentColour.match(/\d+/g).map(x=>(+x).toString(16).padStart(2,0)).join``){  //changes rgb to hex and checks if they are the same
+        if (currentColour == nodeToAppend.style.backgroundColor){
             nodeToAppend.setAttribute('id', 'colour-circle-lit')
         }
         colourOptionsDiv.appendChild(nodeToAppend)
