@@ -64,14 +64,15 @@ circleButton.click()
 // here begins the colour selection
 
 let palletList = {
-    'first': ['#f37e21', '#29aae1', '#fbaf41', '#fced22', '#c7e9f3', '#ffc712', '#efa8ae', '#b2d136', '#85328a', '#ec1563'],
-    'second': ['#a4bcf7', '#f4f1bd', '#f4d9e2', '#a4bcf7', '#f4d9e2'],
-    'third': ['#00a1a3', '#ff6ba0', '#e11246', '#fba96f', '#6e154f', '#ffc712'],
-    'fourth': ['#6db8db', '#e7d4d3', '#d579ab', '#f5f4ec', '#4e5873',],
-    'fifth': ['#d49924', '#ebd7a9', '#cd0761', '#62aba9',],
-    'sixth': ['#f2eb3b', '#fcc11b', '#f58e05', '#ed5523', '#ef3327', '#b2204d', '#7d3392', '#483296', '#3f5eae', '#00adae', '#63b247', '#d3e03b'],
-    'seventh': ['#a51c46', '#ff4e23', '#f6be11', '#0eb4b0', '#473291'],
-    'eigth': ['#660099', '#3d005b', '#d1b2e0', '#eae0cc'],
+    'basic': ['#f37e21', '#29aae1', '#fbaf41', '#c7e9f3', '#b2d136', '#85328a', '#ec1563'],
+    'sunset': ['#B01E68', '#DC3535', '#F49D1A', '#FFE15D'],
+    'beach': ['#64abe3', '#bcdbf7', '#fed8b5', '#f9d09a'],
+    'winter': ['#0014FF', '#009EFF', '#00E7FF', '#00FFF6'],
+    'verdure': ['#523906', '#535204', '#62760C', '#CDB30C',],
+    'royal purple': ['#160040', '#4C0070', '#eae0cc', '#9A0680'],
+    'coffee': ['#FFFBE9', '#E3CAA5', '#3C2A21', '#AD8B73'],
+    'anime girl': ['#F6DEF6', '#c097c1', '#CFE5CF', '#ff88d0'],
+    'wimbledon': ['#6cce56', '#d84f4f', '#FFE3E1', '#FFF5E4'],
 }
 
 
@@ -100,7 +101,7 @@ function addBWI(){ // adds black, white and invis.
 
 
 //load initial colours
-for (let colour of palletList['first']){
+for (let colour of palletList['basic']){
     let nodeToAppend = document.createElement('button')
     nodeToAppend.classList.add('colour-circle')
     nodeToAppend.classList.add('colour-button')
@@ -112,7 +113,7 @@ colourOptionsDiv.firstElementChild.setAttribute('id', 'colour-circle-lit')
 
 //here begins what happens when you click a colour button
 
-let currentColour = '#f37e21'
+let currentColour = 'rgb(243, 126, 33)'
 
 function addNewPalletListener(){
     const colourButtons = document.querySelectorAll('.colour-button')
@@ -141,7 +142,11 @@ palletSelector.addEventListener('input', (e) => {
         nodeToAppend.classList.add('colour-circle')
         nodeToAppend.classList.add('colour-button')
         nodeToAppend.style.backgroundColor = colour
+        if (colour == '#'+currentColour.match(/\d+/g).map(x=>(+x).toString(16).padStart(2,0)).join``){  //changes rgb to hex and checks if they are the same
+            nodeToAppend.setAttribute('id', 'colour-circle-lit')
+        }
         colourOptionsDiv.appendChild(nodeToAppend)
+        
     }
     addBWI()
     addNewPalletListener()
