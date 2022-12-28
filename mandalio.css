@@ -73,7 +73,7 @@ header {
     display: flex;
     flex-direction: column;
     margin: 10px;
-    border: 1px blue solid;
+    border: 0px blue solid;
     grid-column: 1/2;
     grid-row: 2/4;
     background-color: rgb(50, 50, 50);
