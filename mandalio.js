@@ -1,42 +1,72 @@
+//check if using mobile
+let canvasWidth = 900
+if (screen.width < 800) {
+    canvasWidth = 600
+    // change the custom property
+    // document.documentElement.style.setProperty('--canvas-width', '600px')
+  }
+
+// set canvas dimensions
+document.getElementById('main-canvas').width = canvasWidth
+document.getElementById('main-canvas').height = canvasWidth
+document.getElementById('main-canvas').style.width = canvasWidth
+document.getElementById('main-canvas').style.height = canvasWidth
+
+document.getElementById('clickable-canvas').width = canvasWidth
+document.getElementById('clickable-canvas').height = canvasWidth
+document.getElementById('clickable-canvas').style.width = canvasWidth
+document.getElementById('clickable-canvas').style.height = canvasWidth
+
+document.getElementById('circle-overlay-canvas').width = canvasWidth
+document.getElementById('circle-overlay-canvas').height = canvasWidth
+document.getElementById('circle-overlay-canvas').style.width = canvasWidth
+document.getElementById('circle-overlay-canvas').style.height = canvasWidth
+
+document.getElementById('grid-overlay-canvas').width = canvasWidth
+document.getElementById('grid-overlay-canvas').height = canvasWidth
+document.getElementById('grid-overlay-canvas').style.width = canvasWidth
+document.getElementById('grid-overlay-canvas').style.height = canvasWidth
+
+
 
 // here bgins functions for drawing overlays
 
 const circleCTX = document.getElementById("circle-overlay-canvas").getContext("2d")
 circleCTX.strokeStyle = 'white'
 circleCTX.beginPath()
-circleCTX.arc(450, 450, 150, 0, Math.PI * 2)
+circleCTX.arc(canvasWidth / 2, canvasWidth / 2, canvasWidth / 6, 0, Math.PI * 2)
 circleCTX.stroke()
 circleCTX.beginPath()
-circleCTX.arc(450, 450, 300, 0, Math.PI * 2)
+circleCTX.arc(canvasWidth / 2, canvasWidth / 2, canvasWidth / 3, 0, Math.PI * 2)
 circleCTX.stroke()
 circleCTX.beginPath()
-circleCTX.arc(450, 450, 450, 0, Math.PI * 2)
+circleCTX.arc(canvasWidth / 2, canvasWidth / 2, canvasWidth / 2, 0, Math.PI * 2)
 circleCTX.stroke()
 
 const gridCTX = document.getElementById("grid-overlay-canvas").getContext("2d")
 gridCTX.strokeStyle = 'white'
 gridCTX.beginPath()
-gridCTX.moveTo(150, 0)
-gridCTX.lineTo(150, 900)
-gridCTX.moveTo(300, 0)
-gridCTX.lineTo(300, 900)
-gridCTX.moveTo(450, 0)
-gridCTX.lineTo(450, 900)
-gridCTX.moveTo(600, 0)
-gridCTX.lineTo(600, 900)
-gridCTX.moveTo(750, 0)
-gridCTX.lineTo(750, 900)
+gridCTX.moveTo(canvasWidth / 6, 0)
+gridCTX.lineTo(canvasWidth / 6, canvasWidth)
+gridCTX.moveTo(canvasWidth / 3, 0)
+gridCTX.lineTo(canvasWidth / 3, canvasWidth)
+gridCTX.moveTo(canvasWidth / 2, 0)
+gridCTX.lineTo(canvasWidth / 2, canvasWidth)
+gridCTX.moveTo(canvasWidth / 1.5, 0)
+gridCTX.lineTo(canvasWidth / 1.5, canvasWidth)
+gridCTX.moveTo(canvasWidth / 1.2, 0)
+gridCTX.lineTo(canvasWidth / 1.2, canvasWidth)
 
-gridCTX.moveTo(0, 150)
-gridCTX.lineTo(900, 150)
-gridCTX.moveTo(0, 300)
-gridCTX.lineTo(900, 300)
-gridCTX.moveTo(0, 450)
-gridCTX.lineTo(900, 450)
-gridCTX.moveTo(0, 600)
-gridCTX.lineTo(900, 600)
-gridCTX.moveTo(0, 750)
-gridCTX.lineTo(900, 750)
+gridCTX.moveTo(0, canvasWidth / 6)
+gridCTX.lineTo(canvasWidth, canvasWidth / 6)
+gridCTX.moveTo(0, canvasWidth / 3)
+gridCTX.lineTo(canvasWidth, canvasWidth / 3)
+gridCTX.moveTo(0, canvasWidth / 2)
+gridCTX.lineTo(canvasWidth, canvasWidth / 2)
+gridCTX.moveTo(0, canvasWidth / 1.5)
+gridCTX.lineTo(canvasWidth, canvasWidth / 1.5)
+gridCTX.moveTo(0, canvasWidth / 1.2)
+gridCTX.lineTo(canvasWidth, canvasWidth / 1.2)
 gridCTX.closePath()
 gridCTX.stroke()
 
@@ -63,6 +93,8 @@ circleButton.click()
 
 // here begins the colour selection
 
+let currentColour = 'rgb(243, 126, 33)'
+
 let palletList = {
     'basic': ['#f37e21', '#29aae1', '#fbaf41', '#c7e9f3', '#b2d136', '#85328a', '#ec1563'],
     'sunset': ['#240002', '#6f0100', '#a53005', '#d97e0c', '#fec135'],
@@ -83,20 +115,31 @@ function addBWI(){ // adds black, white and invis.
     let nodeToAppend = document.createElement('button')
     nodeToAppend.classList.add('colour-circle')
     nodeToAppend.classList.add('colour-button')
-    nodeToAppend.style.backgroundColor = 'black'
+    nodeToAppend.style.backgroundColor = 'rgb(0, 0, 0)'
     colourOptionsDiv.appendChild(nodeToAppend)
+    if (currentColour == 'rgb(0, 0, 0)'){
+        nodeToAppend.setAttribute('id', 'colour-circle-lit')
+    }
 
     nodeToAppend = document.createElement('button')
     nodeToAppend.classList.add('colour-circle')
     nodeToAppend.classList.add('colour-button')
-    nodeToAppend.style.backgroundColor = 'white'
+    nodeToAppend.style.backgroundColor = 'rgb(255, 255, 255)'
     colourOptionsDiv.appendChild(nodeToAppend)
+    if (currentColour == 'rgb(255, 255, 255)'){
+        nodeToAppend.setAttribute('id', 'colour-circle-lit')
+    }
 
     nodeToAppend = document.createElement('button')
     nodeToAppend.classList.add('colour-circle')
     nodeToAppend.classList.add('colour-button')
     nodeToAppend.style.backgroundColor = 'rgb(50, 50, 50)'
     colourOptionsDiv.appendChild(nodeToAppend)
+    if (currentColour == 'rgb(50, 50, 50)'){
+        nodeToAppend.setAttribute('id', 'colour-circle-lit')
+    }
+
+    
 }
 
 
@@ -113,7 +156,7 @@ colourOptionsDiv.firstElementChild.setAttribute('id', 'colour-circle-lit')
 
 //here begins what happens when you click a colour button
 
-let currentColour = 'rgb(243, 126, 33)'
+
 
 function addNewPalletListener(){
     const colourButtons = document.querySelectorAll('.colour-button')
@@ -125,6 +168,7 @@ function addNewPalletListener(){
             currentColour = event.target.style.backgroundColor
             console.log(currentColour)
             event.target.setAttribute('id', 'colour-circle-lit')
+            mainCTX.beginPath()
         })
     }
 }
@@ -162,7 +206,7 @@ const mainCanvas = document.getElementById('main-canvas')
 const clickableCanvas = document.getElementById('clickable-canvas')
 const mainCTX = mainCanvas.getContext('2d')
 mainCTX.fillStyle = ('rgb(50, 50, 50)')
-mainCTX.fillRect(0, 0, 900, 900)
+mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
 let rect
 let isPainting = false
 let points = []
@@ -208,6 +252,8 @@ clickableCanvas.addEventListener('mousedown', (event) => {
     isPainting = true
     undoState = mainCanvas.toDataURL()
     if (event.shiftKey){  // straight line shift key draw
+        isPainting = false
+        points = []
         rect = clickableCanvas.getBoundingClientRect()
         let currentX = event.clientX - rect.left
         let currentY = event.clientY - rect.top
@@ -220,17 +266,22 @@ clickableCanvas.addEventListener('mousedown', (event) => {
         mainCTX.lineTo(currentX, currentY)
         mainCTX.stroke()
 
-        mainCTX.moveTo(900 - lastPointX, lastPointY)
-        mainCTX.lineTo(900 - currentX, currentY)
+        mainCTX.moveTo(mainCanvas.width - lastPointX, lastPointY)
+        mainCTX.lineTo(mainCanvas.width - currentX, currentY)
         mainCTX.stroke()
 
-        mainCTX.moveTo(lastPointX, 900 - lastPointY)
-        mainCTX.lineTo(currentX, 900 - currentY)
+        mainCTX.moveTo(lastPointX, mainCanvas.width - lastPointY)
+        mainCTX.lineTo(currentX, mainCanvas.width - currentY)
         mainCTX.stroke()
 
-        mainCTX.moveTo(900 - lastPointX, 900 - lastPointY)
-        mainCTX.lineTo(900 - currentX, 900 - currentY)
+        mainCTX.moveTo(mainCanvas.width - lastPointX, mainCanvas.width - lastPointY)
+        mainCTX.lineTo(mainCanvas.width - currentX, mainCanvas.width - currentY)
         mainCTX.stroke()
+
+        // mainCTX.closePath()
+
+        lastPointX = currentX
+        lastPointY = currentY
         
     }
 })
@@ -244,10 +295,14 @@ clickableCanvas.addEventListener('mouseup', (event) => {
     rect = clickableCanvas.getBoundingClientRect()
     lastPointX = event.clientX - rect.left
     lastPointY = event.clientY - rect.top
-    mainCTX.beginPath()
+    // mainCTX.beginPath()
     
 })
 
+document.body.addEventListener('mouseup', (event) => {
+    isPainting = false
+    points = []
+})
 
 clickableCanvas.addEventListener('mousemove', (event) => {
     if (!isPainting) {
@@ -259,6 +314,7 @@ clickableCanvas.addEventListener('mousemove', (event) => {
     points.push([x, y])
     // getMousePosition(mainCanvas, event)
     drawAll()
+    
 })
 
 
@@ -283,36 +339,41 @@ function drawAll() {
         mainCTX.stroke()
 
         mainCTX.beginPath()
-        mainCTX.moveTo(900 - points[i][0], points[i][1])
-        mainCTX.lineTo(900 - points[i+1][0], points[i+1][1])
+        mainCTX.moveTo(mainCanvas.width - points[i][0], points[i][1])
+        mainCTX.lineTo(mainCanvas.width - points[i+1][0], points[i+1][1])
         mainCTX.stroke()
 
         mainCTX.beginPath()
-        mainCTX.moveTo(points[i][0], 900 - points[i][1])
-        mainCTX.lineTo(points[i+1][0], 900 - points[i+1][1])
+        mainCTX.moveTo(points[i][0], mainCanvas.width - points[i][1])
+        mainCTX.lineTo(points[i+1][0], mainCanvas.width - points[i+1][1])
         mainCTX.stroke()
 
         mainCTX.beginPath()
-        mainCTX.moveTo(900 - points[i][0], 900 - points[i][1])
-        mainCTX.lineTo(900 - points[i+1][0], 900 - points[i+1][1])
+        mainCTX.moveTo(mainCanvas.width - points[i][0], mainCanvas.width - points[i][1])
+        mainCTX.lineTo(mainCanvas.width - points[i+1][0], mainCanvas.width - points[i+1][1])
         mainCTX.stroke()
+
+        mainCTX.closePath()
     }
 }
 
 // save, clear and undo buttons
 document.getElementById('clear-button').addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
-    mainCTX.fillRect(0, 0, 900, 900)
+    mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
+    isPainting = false
+    points = []
+    mainCTX.beginPath()
 })
 
 const undoButton = document.getElementById('undo-button')
 undoButton.addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
-    mainCTX.fillRect(0, 0, 900, 900)
+    mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
     let imageToLoad = new Image()
     imageToLoad.src = undoState
     imageToLoad.addEventListener('load', (e) =>{
-        mainCTX.drawImage(imageToLoad, 0, 0, 900, 900)
+        mainCTX.drawImage(imageToLoad, 0, 0, canvasWidth, canvasWidth)
     })
 })
 
@@ -326,10 +387,21 @@ document.addEventListener('keydown', (e) => {
 
 const saveButton = document.getElementById('save-button')
 saveButton.addEventListener('click', (e) => {
-    window.open(mainCanvas.toDataURL())
+    // window.open(mainCanvas.toDataURL())
+    const toDownload = document.createElement('a')
+    toDownload.href = mainCanvas.toDataURL()
+    toDownload.download = mainCanvas.toDataURL()
+    document.body.appendChild(toDownload)
+    toDownload.click()
+    document.removeChild(toDownload)
 })
 
+// nav buttons
 
+const aboutButton = document.getElementById('about-button')
+aboutButton.addEventListener('click', (e) => {
+    document.getElementById('advert-div').scrollIntoView()
+})
 
 // scroll wheel
 clickableCanvas.addEventListener('wheel', (event) => {
