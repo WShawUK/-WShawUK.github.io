@@ -1,11 +1,12 @@
 :root {
     --cursor: auto;
+    --canvas-width: 900px;
 }
 
 body {
     display: grid;
-    grid-template-columns: auto auto 1fr;
-    grid-template-rows: auto auto 1fr;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     margin: 0;
     padding: 0;
     color: white;
@@ -51,19 +52,28 @@ header {
 }
 
 .nav {
-    padding-left: 5em;
-    margin: 0;
+    margin-left: 5em;
+    color: white;
+    text-decoration: none;
+}
+
+.nav:hover{
+    cursor:pointer;
+}
+
+#about-button {
+    margin-left: 5px;
 }
 
 /* here begins canvas */
 
 #canvas-div {
     position: relative;
-    width: min-content;
+    max-width: var(--canvas-width);
     display: flex;
     flex-direction: column;
     margin: 10px;
-    /* border: 1px black solid; */
+    border: 1px blue solid;
     grid-column: 1/2;
     grid-row: 2/4;
     background-color: rgb(50, 50, 50);
@@ -75,9 +85,12 @@ header {
 }
 
 .overlay-button {
+    display: inline-grid;
+    place-content: center;
     transition: 0.3s;
     background-color: rgb(50, 50, 50);
     border: 1px black solid;
+    border-bottom: 0px;
     width: 50px;
     aspect-ratio: 1;
     border-radius: 20% 20% 0 0;
@@ -102,6 +115,7 @@ header {
     height: 50%;
     background-color: rgb(50, 50, 50);
     border: 1px black solid;
+    border-bottom: 0px;
     border-radius: 20% 20% 0 0;
     align-self: flex-end;
 }
@@ -122,8 +136,9 @@ header {
     z-index: 1;
     background-color: rgb(50, 50, 50);
     border: 1px black solid;
-    width: 900px;
-    aspect-ratio: 1;
+    /* position: absolute;
+    bottom: 0;
+    left: 0; */
 }
 
 #clickable-canvas {
@@ -135,8 +150,6 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 900px;
-    aspect-ratio: 1;
 }
 
 #clickable-canvas:hover {
@@ -150,8 +163,6 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 900px;
-    aspect-ratio: 1;
 }
 
 #grid-overlay-canvas {
@@ -161,8 +172,6 @@ header {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 900px;
-    aspect-ratio: 1;
 }
 
 /* here begins explanation div */
@@ -175,7 +184,7 @@ header {
     align-items: center;
     grid-column: 2/4;
     border: whitesmoke 2px solid;
-    border-radius: 3%;
+    border-radius: 20px;
     margin: 10px;
     padding: 0 5% 2% 5%;
 }
@@ -210,8 +219,8 @@ header {
     height: 90%;
     width: 40%;
     background: rgb(70, 70, 70);
-    -webkit-appearance: none;
-    appearance: none;
+    -webkit-appearance: slider-vertical;
+    /* appearance: vertical; */
     outline: none;
     opacity: 0.5;
 }
@@ -262,6 +271,7 @@ header {
     border: 0.1px  solid black;
     color: white;
     font-size: 15px;
+    line-height: normal;
 }
 
 #colour-options-div {
@@ -292,4 +302,31 @@ header {
 
 .colour-circle:hover {
     border: 2px white solid;
+}
+
+#info-div {
+    font-family: poppins;
+    margin: 10px;
+    grid-column: 0/1;
+    grid-row: 4/5;
+    border: 1px black solid;
+    border-radius: 20px;
+}
+
+#tips {
+    padding: 0px;
+    margin-bottom: 5px;
+}
+
+#info {
+    padding: 5px;
+}
+
+#advert-div {
+    grid-column: 1/3;
+    grid-row: 5/6;
+    border: 1px black solid;
+    height: 150px;
+    width: 1100px;
+    margin-left: 10px;
 }
