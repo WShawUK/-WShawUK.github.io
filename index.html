@@ -4,7 +4,7 @@
     <link href="mandalio.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
     <script src="mandalio.js" type="module"></script>
-    <title>Mandalio</title>
+    <title>mandal.io</title>
 </head>
 
 <body>
@@ -14,9 +14,9 @@
             <h1 id="title">mandal.io</h1>
         </div>
         <div id="banner-bottom">
-            <a class="nav" style="padding-left: 5px">about</a>
+            <a class="nav" id='about-button'>about</a>
             <a class="nav">link2</a>
-            <a class="nav">other projects</a>
+            <a class="nav" href="https://github.com/WShawUK?tab=repositories">other projects</a>
         </div>
     </header>
     <!--banner is completed here, canvas begins-->
@@ -29,10 +29,10 @@
             <button id="clear-button" class="small-canvas-buttons">clear</button>
             <button id="undo-button" class="small-canvas-buttons">undo</button>
         </div>
-        <canvas id="main-canvas" width="900" height="900"></canvas>
-        <canvas id="clickable-canvas" width="900" height="900"></canvas>
-        <canvas id="circle-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
-        <canvas id="grid-overlay-canvas" class='canvas-invisible' width="900" height="900"></canvas>
+        <canvas id="main-canvas"></canvas>
+        <canvas id="clickable-canvas"></canvas>
+        <canvas id="circle-overlay-canvas" class='canvas-invisible'></canvas>
+        <canvas id="grid-overlay-canvas" class='canvas-invisible'></canvas>
     </div>
     <!--canvas ends here, explanation div begins-->
     <div id="explanation-div">
@@ -40,9 +40,8 @@
             shapes and symbols. They are used often in Hindu and Buddhist festivals and also as a meditative aid, the
             intent being to help one achieve a trance-like focus and cultivate aesthetic sensibility. A rangoli is made
             by pouring coloured sands onto a surface. <br><br>This website allows you to create a mandala in a similar manner. It is
-            recommended that you don't value perfection too highly, and embrace any mistakes, though there is an undo
-            feature for modern convenience. Its best to fill the canvas with one colour before drawing and long sweeping
-            strokes are prefered.
+            recommended that you don't value perfection too highly, and that you embrace any mistakes, though there is an undo
+            feature for modern convenience.
         </p>
         <img id='mandala-image' src="https://upload.wikimedia.org/wikipedia/commons/5/57/Mandala_Rangoli.jpg">
     </div>
@@ -66,6 +65,22 @@
         <div id="colour-options-div">
             <!--colour circles are placed here by JS-->
         </div>
+    </div>
+    <div id="info-div">
+        <ul><h3 id='tips'>Tips:</h3>
+            <li>Scroll to change the size of the brush</li>
+            <li>Click and then shift-click to draw straight lines</li>
+            <li>Toggle the geometric overlays with the top-left buttons</li>
+            <li>Press cntrl-z to undo</li>
+            <li>I find its best to fill the canvas with one colour and then draw over that</li>
+            <li>Long sweeping strokes produce better curves</li>
+        </ul>
+        <p id="info">This site was made in December 2022 by William Shaw as part of a project portfolio,<br>
+            click 'other projects' at the top to see more.<br>
+            You can also contact me at emailgoeshere with bug reports, suggestions for features, and especially job offers.</p>
+    </div>
+    <div id="advert-div">
+        <p>shameful materialist sellout shill goes here</p>
     </div>
 </body>
 </html>
