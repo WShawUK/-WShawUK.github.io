@@ -210,7 +210,7 @@ header {
 #size-title {
     grid-column: 1/2;
     grid-row: 1/2;
-    margin: auto 7px auto 7px;
+    margin: auto 10px;
 }
 
 #size-slider {
@@ -231,7 +231,7 @@ header {
     appearance: none;
     width: 20px;
     height: 20px;
-    border-radius: 50%;
+    border-radius: 20px;
     background: rgb(40, 40, 40);
     cursor: pointer;
 }
@@ -257,7 +257,7 @@ header {
 #colour-title {
     grid-column: 3/4;
     grid-row: 1/2;
-    margin: auto;
+    margin: auto 10px;
 }
 
 #pallet-selector {
@@ -266,7 +266,7 @@ header {
     grid-row: 2/3;
     margin: auto;
     width: 50%;
-    height: 50%;
+    height: 30px;
     background-color: rgb(50, 50, 50);
     outline: none;
     border: 0.1px  solid black;
@@ -283,7 +283,7 @@ header {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    margin: 10px;
+    margin: auto 10px;
     border: solid 1px black;
 }
 
