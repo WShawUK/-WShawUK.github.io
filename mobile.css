@@ -89,7 +89,7 @@ header {
     place-content: center;
     transition: 0.3s;
     background-color: rgb(50, 50, 50);
-    border: 1px black solid;
+    border: 1px blue solid;
     border-bottom: 0px;
     width: 50px;
     aspect-ratio: 1;
