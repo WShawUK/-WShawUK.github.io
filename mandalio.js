@@ -1,4 +1,5 @@
 //check if using mobile
+console.log(screen.width)
 let canvasWidth = 900
 if (screen.width < 800) {
     canvasWidth = 600
