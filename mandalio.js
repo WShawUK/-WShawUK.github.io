@@ -247,8 +247,10 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 //     console.log("Coordinate x: " + x, "Coordinate y: " + y);
 // }
 
-let undoState
-clickableCanvas.addEventListener('mousedown', (event) => {
+
+
+
+const mouseDownEvent = (event) => {
     isPainting = true
     undoState = mainCanvas.toDataURL()
     if (event.shiftKey){  // straight line shift key draw
@@ -280,31 +282,37 @@ clickableCanvas.addEventListener('mousedown', (event) => {
 
         // mainCTX.closePath()
 
+        lastLastPointX = lastPointX
+        lastLastPointY = lastPointY
         lastPointX = currentX
         lastPointY = currentY
         
     }
-})
+}
 
+let undoState
+clickableCanvas.addEventListener('mousedown', mouseDownEvent)
+clickableCanvas.addEventListener('touchstart', mouseDownEvent)
 
 let lastPointX
 let lastPointY
-clickableCanvas.addEventListener('mouseup', (event) => {
+let lastLastPointX
+let lastLastPointY
+
+const mouseUpEvent = (event) => {
     isPainting = false
     points = []
     rect = clickableCanvas.getBoundingClientRect()
     lastPointX = event.clientX - rect.left
     lastPointY = event.clientY - rect.top
     // mainCTX.beginPath()
-    
-})
+}
 
-document.body.addEventListener('mouseup', (event) => {
-    isPainting = false
-    points = []
-})
 
-clickableCanvas.addEventListener('mousemove', (event) => {
+clickableCanvas.addEventListener('mouseup', mouseUpEvent)
+clickableCanvas.addEventListener('touchend', mouseUpEvent)
+
+const mouseMoveEvent = (event) => {
     if (!isPainting) {
         return
     }
@@ -313,12 +321,7 @@ clickableCanvas.addEventListener('mousemove', (event) => {
     let y = event.clientY - rect.top
     points.push([x, y])
     // getMousePosition(mainCanvas, event)
-    drawAll()
     
-})
-
-
-function drawAll() {
     mainCTX.lineWidth = cursorSize
     mainCTX.lineCap = 'round'
     mainCTX.strokeStyle = currentColour
@@ -357,6 +360,21 @@ function drawAll() {
     }
 }
 
+
+clickableCanvas.addEventListener('mousemove', mouseMoveEvent)
+clickableCanvas.addEventListener('touchmove', mouseMoveEvent)
+
+
+document.body.addEventListener('mouseup', (event) => {
+    isPainting = false
+    points = []
+})
+
+document.body.addEventListener('touchend', (event) => {
+    isPainting = false
+    points = []
+})
+
 // save, clear and undo buttons
 document.getElementById('clear-button').addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
@@ -368,6 +386,8 @@ document.getElementById('clear-button').addEventListener('click', (e) => {
 
 const undoButton = document.getElementById('undo-button')
 undoButton.addEventListener('click', (e) => {
+    lastPointX = lastLastPointX
+    lastPointY = lastLastPointY
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
     mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
     let imageToLoad = new Image()
@@ -375,6 +395,7 @@ undoButton.addEventListener('click', (e) => {
     imageToLoad.addEventListener('load', (e) =>{
         mainCTX.drawImage(imageToLoad, 0, 0, canvasWidth, canvasWidth)
     })
+    mainCTX.beginPath()
 })
 
 
