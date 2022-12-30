@@ -1,0 +1,333 @@
+:root {
+    --cursor: auto;
+    --canvas-width: 900px;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto auto auto auto;
+    margin: 0;
+    padding: 0;
+    color: white;
+    background-color: rgb(50, 50, 50);
+    min-height: 100vh;
+}
+
+header {
+    grid-row: 1/2;
+    grid-column: 0/1;
+    display: grid;
+    grid-template-rows: 1fr, 5fr;
+}
+
+#lotus {
+    align-self: center;
+    height: 4em;
+    aspect-ratio: 2 / 1;
+    padding: 5px;
+}
+
+#title {
+    font-family: poppins;
+    letter-spacing: 0.2em;
+    align-self: flex-end;
+    font-size: 60px;
+    margin: 0;
+}
+
+#banner-top {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(40, 40, 40);
+
+}
+
+#banner-bottom {
+    font-family: poppins;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(30, 30, 30);
+}
+
+.nav {
+    margin-left: 5em;
+    color: white;
+    text-decoration: none;
+}
+
+.nav:hover{
+    cursor:pointer;
+}
+
+#about-button {
+    margin-left: 5px;
+}
+
+/* here begins canvas */
+
+#canvas-div {
+    position: relative;
+    max-width: var(--canvas-width);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    border: 0px blue solid;
+    grid-column: 0/1;
+    grid-row: 2/3;
+    background-color: rgb(50, 50, 50);
+}
+
+#button-div {
+    display: flex;
+    flex-direction: row;
+}
+
+.overlay-button {
+    display: inline-grid;
+    place-content: center;
+    transition: 0.3s;
+    background-color: rgb(50, 50, 50);
+    border: 1px black solid;
+    border-bottom: 0px;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 20% 20% 0 0;
+}
+
+#circle-icon {
+    opacity: 0.5;
+}
+
+#grid-icon {
+    opacity: 0.5;
+}
+
+.overlay-button:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+.small-canvas-buttons {
+    transition: 0.3s;
+    opacity: 0.5;
+    color: white;
+    height: 50%;
+    background-color: rgb(50, 50, 50);
+    border: 1px black solid;
+    border-bottom: 0px;
+    border-radius: 20% 20% 0 0;
+    align-self: flex-end;
+}
+
+.small-canvas-buttons:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+.canvas-invisible {
+    display: none;
+}
+
+.overlay-button-litup {
+    background-color: rgb(70, 70, 70);
+}
+
+#main-canvas {
+    z-index: 1;
+    background-color: rgb(50, 50, 50);
+    border: 1px black solid;
+    /* position: absolute;
+    bottom: 0;
+    left: 0; */
+}
+
+#clickable-canvas {
+    cursor: var(--cursor), auto;
+    z-index: 3;
+    background-color: transparent;
+    border: 0px black solid;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#clickable-canvas:hover {
+    overflow:hidden;
+}
+
+#circle-overlay-canvas {
+    opacity: 0.5;
+    border: 0px black solid;
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+#grid-overlay-canvas {
+    opacity: 0.5;
+    border: 0px black solid;
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+/* here begins explanation div */
+
+#explanation-div {
+    font-family: poppins;
+    line-height: 1.1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-column: 0/1;
+    grid-row: 4/5;
+    border: whitesmoke 2px solid;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 0px 10px 5px 10px;
+}
+
+#mandala-image {
+    width: 4 0%;
+}
+
+/* here begins side options */
+
+#small-options-div {
+    max-width: 50%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: auto 1px auto;
+    grid-template-rows: auto auto auto;
+    margin: 10px;
+    grid-column: 0/1;
+    grid-row: 3/4;
+    border: black 1px solid;
+}
+
+#size-title {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    margin: 10px auto;
+}
+
+#size-slider {
+    margin: auto;
+    grid-column: 1/2;
+    grid-row: 2/4;
+    height: 90%;
+    width: 20px;
+    background: rgb(70, 70, 70);
+    -webkit-appearance: slider-vertical;
+    /* appearance: vertical; */
+    outline: none;
+    opacity: 0.5;
+}
+
+#size-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgb(40, 40, 40);
+    cursor: pointer;
+}
+
+#size-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgb(40, 40, 40);
+    cursor: pointer;
+}
+
+.divider {
+    grid-column: 2/3;
+    grid-row: 1/4;
+    background-color: white;
+    opacity: 0.2;
+    height: 90%;
+    width: 1px;
+}
+
+
+#colour-title {
+    grid-column: 3/4;
+    grid-row: 1/2;
+    margin: 10px auto;
+}
+
+#pallet-selector {
+    font-family: poppins;
+    grid-column: 3/4;
+    grid-row: 2/3;
+    margin: auto;
+    width: 50%;
+    height: 30px;
+    background-color: rgb(50, 50, 50);
+    outline: none;
+    border: 0.1px  solid black;
+    color: white;
+    font-size: 15px;
+    line-height: normal;
+}
+
+#colour-options-div {
+    height: 300px;
+    width: 400px;
+    grid-column: 3/4;
+    grid-row: 3/4;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    margin: 10px auto;
+    border: solid 1px black;
+}
+
+.colour-circle {
+    margin: auto;
+    transition: 0.1s;
+    border: 2px black solid;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    /* background-color: yellow; */
+}
+
+#colour-circle-lit {
+    border: 2px white solid;
+}
+
+.colour-circle:hover {
+    border: 2px white solid;
+}
+
+#info-div {
+    font-family: poppins;
+    margin: 10px;
+    grid-column: 0/1;
+    grid-row: 5/6;
+    border: 1px black solid;
+    border-radius: 20px;
+}
+
+#tips {
+    padding: 0px;
+    margin-bottom: 5px;
+}
+
+#info {
+    padding: 5px;
+}
+
+#advert-div {
+    grid-column: 0/1;
+    grid-row: 6/7;
+    border: 1px black solid;
+    height: 150px;
+    width: 1100px;
+    margin-left: 10px;
+}
