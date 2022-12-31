@@ -5,7 +5,7 @@
 
 body {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto 1fr 1fr;
     grid-template-rows: auto auto auto auto auto;
     margin: 0;
     padding: 0;
@@ -23,7 +23,7 @@ header {
 
 #lotus {
     align-self: center;
-    height: 4em;
+    height: 10vw;
     aspect-ratio: 2 / 1;
     padding: 5px;
 }
@@ -32,8 +32,19 @@ header {
     font-family: poppins;
     letter-spacing: 0.2em;
     align-self: flex-end;
-    font-size: 60px;
+    font-size: 10vw;
     margin: 0;
+}
+
+/* max font size for title */
+@media screen and (min-width: 800px) {
+    #lotus {
+        height: 4em;
+    }
+
+    #title {
+       font-size: 4em;
+    }
 }
 
 #banner-top {
@@ -52,7 +63,7 @@ header {
 }
 
 .nav {
-    margin-left: 5em;
+    margin-left: 5%;
     color: white;
     text-decoration: none;
 }
@@ -68,8 +79,7 @@ header {
 /* here begins canvas */
 
 #canvas-div {
-    position: relative;
-    max-width: var(--canvas-width);
+    /* position: relative; */
     display: flex;
     flex-direction: column;
     margin: 10px;
@@ -89,7 +99,7 @@ header {
     place-content: center;
     transition: 0.3s;
     background-color: rgb(50, 50, 50);
-    border: 1px red solid;
+    border: 1px black solid;
     border-bottom: 0px;
     width: 50px;
     aspect-ratio: 1;
@@ -132,21 +142,26 @@ header {
     background-color: rgb(70, 70, 70);
 }
 
+#canvas-overlay-div {
+    height: var(--canvas-width);
+    width: var(--canvas-width);
+    position: relative;
+    border: 1px black solid;
+
+}
+
 #main-canvas {
     z-index: 1;
     background-color: rgb(50, 50, 50);
-    border: 1px black solid;
-    /* position: absolute;
+    position: absolute;
     bottom: 0;
-    left: 0; */
+    left: 0;
 }
 
 #clickable-canvas {
-    /* --cursor: auto; */
     cursor: var(--cursor), auto;
     z-index: 3;
     background-color: transparent;
-    border: 0px black solid;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -191,7 +206,7 @@ header {
 }
 
 #mandala-image {
-    width: 40%;
+    width: 50%;
 }
 
 /* here begins side options */
@@ -199,7 +214,7 @@ header {
 #small-options-div {
     text-align: center;
     display: grid;
-    grid-template-columns: auto 1px auto;
+    grid-template-columns: 50px 1px auto;
     grid-template-rows: auto auto auto;
     margin: 10px;
     grid-column: 2/3;
@@ -211,14 +226,15 @@ header {
     grid-column: 1/2;
     grid-row: 1/2;
     margin: auto 10px;
+    /* width: 10%; */
 }
 
 #size-slider {
-    margin: auto;
+    margin: 10px auto;
     grid-column: 1/2;
     grid-row: 2/4;
     height: 90%;
-    width: 40%;
+    width: 20px;
     background: rgb(70, 70, 70);
     -webkit-appearance: slider-vertical;
     /* appearance: vertical; */
@@ -276,15 +292,13 @@ header {
 }
 
 #colour-options-div {
-    height: 300px;
-    width: 400px;
     grid-column: 3/4;
     grid-row: 3/4;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    margin: auto 10px;
-    border: solid 1px black;
+    margin: 2px 10px;
+    /* border: solid 1px black; */
 }
 
 .colour-circle {
@@ -294,7 +308,6 @@ header {
     border-radius: 50%;
     height: 40px;
     width: 40px;
-    /* background-color: yellow; */
 }
 
 #colour-circle-lit {
@@ -308,16 +321,18 @@ header {
 #info-div {
     font-family: poppins;
     margin: 10px;
-    grid-column: 0/1;
+    grid-column: 1/2;
     grid-row: 4/5;
     border: 1px black solid;
     border-radius: 20px;
+    overflow:scroll;
 }
 
 #tips {
     padding: 0px;
     margin-bottom: 5px;
 }
+
 
 #info {
     padding: 5px;
@@ -328,6 +343,52 @@ header {
     grid-row: 5/6;
     border: 1px black solid;
     height: 150px;
-    width: 1100px;
     margin-left: 10px;
 }
+
+@media screen and (orientation: portrait) {
+    body {
+        grid-template-columns: auto;
+        grid-template-rows: auto auto auto auto auto auto auto auto;
+    }
+
+    header {
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+
+    #clickable-canvas {
+        grid-column: 1/2;
+    }
+
+    #canvas-div {
+        margin: auto;
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+
+    #small-options-div {
+        grid-column: 1/2;
+        grid-row: 3/4;
+        width: 90%;
+    }
+
+    #explanation-div {
+        grid-column: 1/2;
+        grid-row: 4/5;
+        margin: 1px;
+        width: 80%;
+    }
+    
+    #info-div {
+        grid-column: 1/2;
+        grid-row: 5/6;
+        width: 90%;
+    }
+    #advert-div {
+        grid-column: 1/2;
+        grid-row: 6/7;
+        width: 90%;
+    }
+  }
+
