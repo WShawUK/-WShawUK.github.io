@@ -1,13 +1,23 @@
 //check if using mobile
-console.log(screen.width)
 let canvasWidth = 900
-if (screen.width < 800) {
-    canvasWidth = 600
-    // change the custom property
-    // document.documentElement.style.setProperty('--canvas-width', '600px')
-  }
+console.log('width:', screen.width, '|', 'height:', screen.height)
+if (screen.height <= screen.width){
+    canvasWidth = Math.floor(screen.height / 100) * 100
+}
+else {
+    canvasWidth = Math.floor(screen.width / 100) * 100
+}
+
+console.log(canvasWidth)
+document.getElementById('canvas-overlay-div').style.setProperty("--canvas-width", `${canvasWidth}px`);
+
+
 
 // set canvas dimensions
+document.getElementById('canvas-overlay-div').style.width = canvasWidth
+document.getElementById('canvas-overlay-div').style.height = canvasWidth
+console.log(document.getElementById('canvas-overlay-div').style.height)
+
 document.getElementById('main-canvas').width = canvasWidth
 document.getElementById('main-canvas').height = canvasWidth
 document.getElementById('main-canvas').style.width = canvasWidth
@@ -27,6 +37,8 @@ document.getElementById('grid-overlay-canvas').width = canvasWidth
 document.getElementById('grid-overlay-canvas').height = canvasWidth
 document.getElementById('grid-overlay-canvas').style.width = canvasWidth
 document.getElementById('grid-overlay-canvas').style.height = canvasWidth
+
+// document.getElementById('canvas-div').style.height = canvasWidth
 
 
 
@@ -314,6 +326,8 @@ clickableCanvas.addEventListener('mouseup', mouseUpEvent)
 clickableCanvas.addEventListener('touchend', mouseUpEvent)
 
 const mouseMoveEvent = (event) => {
+    event.preventDefault()
+    event.stopPropagation()
     if (!isPainting) {
         return
     }
@@ -363,7 +377,52 @@ const mouseMoveEvent = (event) => {
 
 
 clickableCanvas.addEventListener('mousemove', mouseMoveEvent)
-clickableCanvas.addEventListener('touchmove', mouseMoveEvent)
+clickableCanvas.addEventListener('touchmove', (event) => {
+    event.preventDefault()
+    event.stopPropagation()
+    rect = clickableCanvas.getBoundingClientRect()
+    let x = event.clientX - rect.left
+    let y = event.clientY - rect.top
+    points.push([x, y])
+    // getMousePosition(mainCanvas, event)
+    
+    mainCTX.lineWidth = cursorSize
+    mainCTX.lineCap = 'round'
+    mainCTX.strokeStyle = currentColour
+
+
+    for (let i = 0; i < points.length - 1; i++){
+        // mainCTX.beginPath()
+        // let x_mid = (points[i][0] + points[i+1][0]) / 2;
+        // let y_mid = (points[i][1] + points[i+1][1]) / 2;
+        // let cp_x1 = (x_mid + points[i][0]) / 2;
+        // let cp_x2 = (x_mid + points[i+1][0]) / 2;
+        // mainCTX.quadraticCurveTo(cp_x1,points[i][1] ,x_mid, y_mid);
+        // mainCTX.quadraticCurveTo(cp_x2,points[i+1][1] ,points[i+1].x,points[i+1].y);
+
+        mainCTX.beginPath()
+        mainCTX.moveTo(points[i][0], points[i][1])
+        mainCTX.lineTo(points[i+1][0], points[i+1][1])  // quadratic curve to?
+        mainCTX.stroke()
+
+        mainCTX.beginPath()
+        mainCTX.moveTo(mainCanvas.width - points[i][0], points[i][1])
+        mainCTX.lineTo(mainCanvas.width - points[i+1][0], points[i+1][1])
+        mainCTX.stroke()
+
+        mainCTX.beginPath()
+        mainCTX.moveTo(points[i][0], mainCanvas.width - points[i][1])
+        mainCTX.lineTo(points[i+1][0], mainCanvas.width - points[i+1][1])
+        mainCTX.stroke()
+
+        mainCTX.beginPath()
+        mainCTX.moveTo(mainCanvas.width - points[i][0], mainCanvas.width - points[i][1])
+        mainCTX.lineTo(mainCanvas.width - points[i+1][0], mainCanvas.width - points[i+1][1])
+        mainCTX.stroke()
+
+        mainCTX.closePath()
+    }
+})
 
 
 document.body.addEventListener('mouseup', (event) => {
