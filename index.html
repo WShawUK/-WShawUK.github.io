@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="mandalio.css" rel="stylesheet" media="screen and (min-width: 801px)">
-    <link href="mobile.css" rel="stylesheet" media="screen and (max-width: 800px)">
+    <link href="mandalio.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet">
     <script src="mandalio.js" type="module"></script>
     <title>mandal.io</title>
@@ -30,10 +29,12 @@
             <button id="clear-button" class="small-canvas-buttons">clear</button>
             <button id="undo-button" class="small-canvas-buttons">undo</button>
         </div>
-        <canvas id="main-canvas"></canvas>
-        <canvas id="clickable-canvas"></canvas>
-        <canvas id="circle-overlay-canvas" class='canvas-invisible'></canvas>
-        <canvas id="grid-overlay-canvas" class='canvas-invisible'></canvas>
+        <div id="canvas-overlay-div">
+            <canvas id="main-canvas"></canvas>
+            <canvas id="clickable-canvas"></canvas>
+            <canvas id="circle-overlay-canvas" class='canvas-invisible'></canvas>
+            <canvas id="grid-overlay-canvas" class='canvas-invisible'></canvas>
+        </div>
     </div>
     <!--canvas ends here, explanation div begins-->
     <div id="explanation-div">
@@ -81,7 +82,7 @@
             You can also contact me at emailgoeshere with bug reports, suggestions for features, and especially job offers.</p>
     </div>
     <div id="advert-div">
-        <p>asdfdsafasdff</p>
+        <p></p>
     </div>
 </body>
 </html>
