@@ -7,6 +7,9 @@ if (screen.height <= screen.width){
 else {
     canvasWidth = Math.floor(screen.width / 100) * 100
 }
+if (canvasWidth > 900){
+    canvasWidth = 900
+}
 
 console.log(canvasWidth)
 document.getElementById('canvas-overlay-div').style.setProperty("--canvas-width", `${canvasWidth}px`);
