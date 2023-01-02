@@ -384,8 +384,8 @@ clickableCanvas.addEventListener('touchmove', (event) => {
 
     const thisTouch = event.touches[0]
 
-    let x = thisTouch.clientX - rect.left
-    let y = thisTouch.clientY - rect.top
+    let x = (thisTouch.clientX - rect.left) * 2
+    let y = (thisTouch.clientY - rect.top) * 2
 
     points.push([x, y])
     // getMousePosition(mainCanvas, event)
