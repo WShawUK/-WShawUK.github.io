@@ -151,6 +151,7 @@ header {
 }
 
 #main-canvas {
+    width: var(--canvas-width);
     z-index: 1;
     background-color: rgb(50, 50, 50);
     position: absolute;
@@ -159,6 +160,7 @@ header {
 }
 
 #clickable-canvas {
+    width: var(--canvas-width);
     cursor: var(--cursor), auto;
     z-index: 3;
     background-color: transparent;
@@ -346,7 +348,7 @@ header {
     margin-left: 10px;
 }
 
-@media screen and (orientation: portrait) {
+@media screen and (max-width: 1200px) {
     body {
         grid-template-columns: auto;
         grid-template-rows: auto auto auto auto auto auto auto auto;
@@ -371,12 +373,13 @@ header {
         grid-column: 1/2;
         grid-row: 3/4;
         width: 90%;
+        margin: 10px auto;
     }
 
     #explanation-div {
         grid-column: 1/2;
         grid-row: 4/5;
-        margin: 1px;
+        margin: 10px auto;
         width: 80%;
     }
     
@@ -384,11 +387,13 @@ header {
         grid-column: 1/2;
         grid-row: 5/6;
         width: 90%;
+        margin: 10px auto;
     }
     #advert-div {
         grid-column: 1/2;
         grid-row: 6/7;
         width: 90%;
+        margin: 10px auto;
     }
   }
 
