@@ -11,23 +11,21 @@ if (canvasWidth > 900){
     canvasWidth = 900
 }
 
-console.log(canvasWidth)
-document.getElementById('canvas-overlay-div').style.setProperty("--canvas-width", `${canvasWidth}px`);
+document.documentElement.style.setProperty("--canvas-width", `${canvasWidth}px`);
 
 
 
 // set canvas dimensions
 document.getElementById('canvas-overlay-div').style.width = canvasWidth
 document.getElementById('canvas-overlay-div').style.height = canvasWidth
-console.log(document.getElementById('canvas-overlay-div').style.height)
 
-document.getElementById('main-canvas').width = canvasWidth
-document.getElementById('main-canvas').height = canvasWidth
+document.getElementById('main-canvas').width = canvasWidth * 2
+document.getElementById('main-canvas').height = canvasWidth * 2
 document.getElementById('main-canvas').style.width = canvasWidth
 document.getElementById('main-canvas').style.height = canvasWidth
 
-document.getElementById('clickable-canvas').width = canvasWidth
-document.getElementById('clickable-canvas').height = canvasWidth
+document.getElementById('clickable-canvas').width = canvasWidth * 2
+document.getElementById('clickable-canvas').height = canvasWidth * 2
 document.getElementById('clickable-canvas').style.width = canvasWidth
 document.getElementById('clickable-canvas').style.height = canvasWidth
 
@@ -222,7 +220,7 @@ const mainCanvas = document.getElementById('main-canvas')
 const clickableCanvas = document.getElementById('clickable-canvas')
 const mainCTX = mainCanvas.getContext('2d')
 mainCTX.fillStyle = ('rgb(50, 50, 50)')
-mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
+mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
 let rect
 let isPainting = false
 let points = []
@@ -233,7 +231,6 @@ const sizeSlider = document.getElementById('size-slider')
 
 function sizeSliderChanges(){
     cursorSize = sizeSlider.value
-    console.log(cursorSize)
 
     // scales and sets custom cursor for canvas
     const tempCursorCanvas = document.createElement('canvas')
@@ -265,18 +262,21 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 
 
 
-
+let undoState
 const mouseDownEvent = (event) => {
     isPainting = true
-    undoState = mainCanvas.toDataURL()
+    mainCanvas.toBlob((blob) => {
+        undoState = URL.createObjectURL(blob)
+    })
+
     if (event.shiftKey){  // straight line shift key draw
         isPainting = false
         points = []
         rect = clickableCanvas.getBoundingClientRect()
-        let currentX = event.clientX - rect.left
-        let currentY = event.clientY - rect.top
+        let currentX = (event.clientX - rect.left) * 2
+        let currentY = (event.clientY - rect.top) * 2
 
-        mainCTX.lineWidth = cursorSize
+        mainCTX.lineWidth = cursorSize * 2
         mainCTX.lineCap = 'round'
         mainCTX.strokeStyle = currentColour
 
@@ -306,7 +306,6 @@ const mouseDownEvent = (event) => {
     }
 }
 
-let undoState
 clickableCanvas.addEventListener('mousedown', mouseDownEvent)
 clickableCanvas.addEventListener('touchstart', mouseDownEvent)
 
@@ -319,8 +318,8 @@ const mouseUpEvent = (event) => {
     isPainting = false
     points = []
     rect = clickableCanvas.getBoundingClientRect()
-    lastPointX = event.clientX - rect.left
-    lastPointY = event.clientY - rect.top
+    lastPointX = (event.clientX - rect.left) * 2
+    lastPointY = (event.clientY - rect.top) * 2
     // mainCTX.beginPath()
 }
 
@@ -330,29 +329,25 @@ clickableCanvas.addEventListener('touchend', mouseUpEvent)
 
 
 clickableCanvas.addEventListener('mousemove', (event) => {
-    event.preventDefault()
-    event.stopPropagation()
     if (!isPainting) {
         return
     }
     rect = clickableCanvas.getBoundingClientRect()
-    let x = event.clientX - rect.left
-    let y = event.clientY - rect.top
+    let x = (event.clientX - rect.left) * 2
+    let y = (event.clientY - rect.top) * 2
     points.push([x, y])
     // getMousePosition(mainCanvas, event)
     
-    mainCTX.lineWidth = cursorSize
+    mainCTX.lineWidth = cursorSize * 2
     mainCTX.lineCap = 'round'
     mainCTX.strokeStyle = currentColour
 
     for (let i = 0; i < points.length - 1; i++){
+
         // mainCTX.beginPath()
-        // let x_mid = (points[i][0] + points[i+1][0]) / 2;
-        // let y_mid = (points[i][1] + points[i+1][1]) / 2;
-        // let cp_x1 = (x_mid + points[i][0]) / 2;
-        // let cp_x2 = (x_mid + points[i+1][0]) / 2;
-        // mainCTX.quadraticCurveTo(cp_x1,points[i][1] ,x_mid, y_mid);
-        // mainCTX.quadraticCurveTo(cp_x2,points[i+1][1] ,points[i+1].x,points[i+1].y);
+        // mainCTX.moveTo(points[i][0], points[i][1])
+        // mainCTX.quadraticCurveTo(points[i+2][0], points[i+2][1], points[i+4][0], points[i+4][1])
+        // mainCTX.stroke()
 
         mainCTX.beginPath()
         mainCTX.moveTo(points[i][0], points[i][1])
@@ -380,16 +375,14 @@ clickableCanvas.addEventListener('mousemove', (event) => {
 
 
 clickableCanvas.addEventListener('touchmove', (event) => {
-    
-
-
     event.preventDefault()
     event.stopPropagation()
+
     rect = clickableCanvas.getBoundingClientRect()
     // let x = event.clientX - rect.left
     // let y = event.clientY - rect.top
 
-    const thisTouch = new Touch()
+    const thisTouch = event.touches[0]
 
     let x = thisTouch.clientX - rect.left
     let y = thisTouch.clientY - rect.top
@@ -442,7 +435,7 @@ document.body.addEventListener('touchend', (event) => {
 // save, clear and undo buttons
 document.getElementById('clear-button').addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
-    mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
+    mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
     isPainting = false
     points = []
     mainCTX.beginPath()
@@ -453,11 +446,11 @@ undoButton.addEventListener('click', (e) => {
     lastPointX = lastLastPointX
     lastPointY = lastLastPointY
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
-    mainCTX.fillRect(0, 0, canvasWidth, canvasWidth)
+    mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
     let imageToLoad = new Image()
     imageToLoad.src = undoState
     imageToLoad.addEventListener('load', (e) =>{
-        mainCTX.drawImage(imageToLoad, 0, 0, canvasWidth, canvasWidth)
+        mainCTX.drawImage(imageToLoad, 0, 0, canvasWidth * 2, canvasWidth * 2)
     })
     mainCTX.beginPath()
 })
@@ -504,6 +497,5 @@ clickableCanvas.addEventListener('wheel', (event) => {
         sizeSlider.value = (Number(sizeSlider.value) - 2).toString()
     }
     sizeSliderChanges()
-    console.log(sizeSlider.value)
     // return
 })
