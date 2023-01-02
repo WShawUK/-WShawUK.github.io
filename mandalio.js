@@ -328,7 +328,8 @@ const mouseUpEvent = (event) => {
 clickableCanvas.addEventListener('mouseup', mouseUpEvent)
 clickableCanvas.addEventListener('touchend', mouseUpEvent)
 
-const mouseMoveEvent = (event) => {
+
+clickableCanvas.addEventListener('mousemove', (event) => {
     event.preventDefault()
     event.stopPropagation()
     if (!isPainting) {
@@ -343,7 +344,6 @@ const mouseMoveEvent = (event) => {
     mainCTX.lineWidth = cursorSize
     mainCTX.lineCap = 'round'
     mainCTX.strokeStyle = currentColour
-
 
     for (let i = 0; i < points.length - 1; i++){
         // mainCTX.beginPath()
@@ -376,16 +376,24 @@ const mouseMoveEvent = (event) => {
 
         mainCTX.closePath()
     }
-}
+})
 
 
-clickableCanvas.addEventListener('mousemove', mouseMoveEvent)
 clickableCanvas.addEventListener('touchmove', (event) => {
+    
+
+
     event.preventDefault()
     event.stopPropagation()
     rect = clickableCanvas.getBoundingClientRect()
-    let x = event.clientX - rect.left
-    let y = event.clientY - rect.top
+    // let x = event.clientX - rect.left
+    // let y = event.clientY - rect.top
+
+    const thisTouch = new Touch()
+
+    let x = thisTouch.clientX - rect.left
+    let y = thisTouch.clientY - rect.top
+
     points.push([x, y])
     // getMousePosition(mainCanvas, event)
     
@@ -395,13 +403,6 @@ clickableCanvas.addEventListener('touchmove', (event) => {
 
 
     for (let i = 0; i < points.length - 1; i++){
-        // mainCTX.beginPath()
-        // let x_mid = (points[i][0] + points[i+1][0]) / 2;
-        // let y_mid = (points[i][1] + points[i+1][1]) / 2;
-        // let cp_x1 = (x_mid + points[i][0]) / 2;
-        // let cp_x2 = (x_mid + points[i+1][0]) / 2;
-        // mainCTX.quadraticCurveTo(cp_x1,points[i][1] ,x_mid, y_mid);
-        // mainCTX.quadraticCurveTo(cp_x2,points[i+1][1] ,points[i+1].x,points[i+1].y);
 
         mainCTX.beginPath()
         mainCTX.moveTo(points[i][0], points[i][1])
