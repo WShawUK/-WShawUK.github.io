@@ -118,6 +118,25 @@ header {
     background-color: rgb(70, 70, 70);
 }
 
+#axes-button {
+    display: inline-grid;
+    place-content: center;
+    transition: 0.3s;
+    height: 40px;
+    aspect-ratio: 1;
+    opacity: 0.5;
+    border: 1px black solid;
+    border-bottom: 0px;
+    border-radius: 20% 20% 0 0;
+    align-self: flex-end;
+    background-color: rgb(50, 50, 50);
+}
+
+#axes-button:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+
 .small-canvas-buttons {
     transition: 0.3s;
     opacity: 0.5;
@@ -205,6 +224,8 @@ header {
     border-radius: 20px;
     margin: 10px;
     padding: 0 5% 2% 5%;
+    font-size: 1.1rem;
+    height: min-content;
 }
 
 #mandala-image {
@@ -327,7 +348,6 @@ header {
     grid-row: 4/5;
     border: 1px black solid;
     border-radius: 20px;
-    overflow:scroll;
 }
 
 #tips {
