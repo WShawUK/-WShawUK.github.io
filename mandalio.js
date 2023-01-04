@@ -296,6 +296,24 @@ const mouseDownEvent = (event) => {
         mainCTX.lineTo(mainCanvas.width - currentX, mainCanvas.width - currentY)
         mainCTX.stroke()
 
+        if (moreAxes){
+            mainCTX.moveTo(lastPointY, lastPointX)
+            mainCTX.lineTo(currentY, currentX)
+            mainCTX.stroke()
+
+            mainCTX.moveTo(mainCanvas.width - lastPointY, lastPointX)
+            mainCTX.lineTo(mainCanvas.width - currentY, currentX)
+            mainCTX.stroke()
+
+            mainCTX.moveTo(lastPointY, mainCanvas.width - lastPointX)
+            mainCTX.lineTo(currentY, mainCanvas.width - currentX)
+            mainCTX.stroke()
+
+            mainCTX.moveTo(mainCanvas.width - lastPointY, mainCanvas.width - lastPointX)
+            mainCTX.lineTo(mainCanvas.width - currentY, mainCanvas.width - currentX)
+            mainCTX.stroke()
+        }
+
         // mainCTX.closePath()
 
         lastLastPointX = lastPointX
@@ -327,7 +345,7 @@ const mouseUpEvent = (event) => {
 clickableCanvas.addEventListener('mouseup', mouseUpEvent)
 clickableCanvas.addEventListener('touchend', mouseUpEvent)
 
-
+let moreAxes = false
 clickableCanvas.addEventListener('mousemove', (event) => {
     if (!isPainting) {
         return
@@ -341,6 +359,7 @@ clickableCanvas.addEventListener('mousemove', (event) => {
     mainCTX.lineWidth = cursorSize * 2
     mainCTX.lineCap = 'round'
     mainCTX.strokeStyle = currentColour
+    
 
     for (let i = 0; i < points.length - 1; i++){
 
@@ -369,6 +388,28 @@ clickableCanvas.addEventListener('mousemove', (event) => {
         mainCTX.lineTo(mainCanvas.width - points[i+1][0], mainCanvas.width - points[i+1][1])
         mainCTX.stroke()
 
+        if (moreAxes){
+            mainCTX.beginPath()
+            mainCTX.moveTo(points[i][1], points[i][0])
+            mainCTX.lineTo(points[i+1][1], points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(mainCanvas.width - points[i][1], points[i][0])
+            mainCTX.lineTo(mainCanvas.width - points[i+1][1], points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(points[i][1], mainCanvas.width - points[i][0])
+            mainCTX.lineTo(points[i+1][1], mainCanvas.width - points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(mainCanvas.width - points[i][1], mainCanvas.width - points[i][0])
+            mainCTX.lineTo(mainCanvas.width - points[i+1][1], mainCanvas.width - points[i+1][0])
+            mainCTX.stroke()
+        }
+
         mainCTX.closePath()
     }
 })
@@ -378,12 +419,9 @@ clickableCanvas.addEventListener('touchmove', (event) => {
     event.preventDefault()
     event.stopPropagation()
 
-    rect = clickableCanvas.getBoundingClientRect()
-    // let x = event.clientX - rect.left
-    // let y = event.clientY - rect.top
-
     const thisTouch = event.touches[0]
-
+    rect = clickableCanvas.getBoundingClientRect()
+    
     let x = (thisTouch.clientX - rect.left) * 2
     let y = (thisTouch.clientY - rect.top) * 2
 
@@ -417,6 +455,28 @@ clickableCanvas.addEventListener('touchmove', (event) => {
         mainCTX.lineTo(mainCanvas.width - points[i+1][0], mainCanvas.width - points[i+1][1])
         mainCTX.stroke()
 
+        if (moreAxes){
+            mainCTX.beginPath()
+            mainCTX.moveTo(points[i][1], points[i][0])
+            mainCTX.lineTo(points[i+1][1], points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(mainCanvas.width - points[i][1], points[i][0])
+            mainCTX.lineTo(mainCanvas.width - points[i+1][1], points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(points[i][1], mainCanvas.width - points[i][0])
+            mainCTX.lineTo(points[i+1][1], mainCanvas.width - points[i+1][0])
+            mainCTX.stroke()
+
+            mainCTX.beginPath()
+            mainCTX.moveTo(mainCanvas.width - points[i][1], mainCanvas.width - points[i][0])
+            mainCTX.lineTo(mainCanvas.width - points[i+1][1], mainCanvas.width - points[i+1][0])
+            mainCTX.stroke()
+        }
+
         mainCTX.closePath()
     }
 })
@@ -432,7 +492,20 @@ document.body.addEventListener('touchend', (event) => {
     points = []
 })
 
-// save, clear and undo buttons
+// axes, save, clear and undo buttons
+
+document.getElementById('axes-button').addEventListener('click', (e) => {
+    moreAxes = !moreAxes
+    if (moreAxes){
+        console.log('more axes')
+        document.getElementById('axes-button').firstElementChild.src = 'axes8.png'
+    }
+    else {
+        console.log('less axes')
+        document.getElementById('axes-button').firstElementChild.setAttribute('src', 'axes4.png')
+    }
+})
+
 document.getElementById('clear-button').addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
     mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
