@@ -347,6 +347,7 @@ clickableCanvas.addEventListener('touchend', mouseUpEvent)
 
 let moreAxes = false
 clickableCanvas.addEventListener('mousemove', (event) => {
+    }
     if (!isPainting) {
         return
     }
@@ -416,9 +417,18 @@ clickableCanvas.addEventListener('mousemove', (event) => {
 
 
 clickableCanvas.addEventListener('touchmove', (event) => {
-    event.preventDefault()
-    event.stopPropagation()
+    if (event.touches.length == 1){
+        event.preventDefault()
+        event.stopPropagation()
+    }
+    else {
+        isPainting = false
+    }
 
+    if (!isPainting){
+        return
+    }
+    
     const thisTouch = event.touches[0]
     rect = clickableCanvas.getBoundingClientRect()
     
