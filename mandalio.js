@@ -417,18 +417,18 @@ clickableCanvas.addEventListener('mousemove', (event) => {
 
 
 clickableCanvas.addEventListener('touchmove', (event) => {
-    if (event.touches.length == 1){
-        event.preventDefault()
-        event.stopPropagation()
-    }
-    else {
-        isPainting = false
-    }
+    // if (event.touches.length == 1){
+    //     event.preventDefault()
+    //     event.stopPropagation()
+    // }
+    // else {
+    //     isPainting = false
+    // }
 
-    if (!isPainting){
-        return
-    }
-    
+    // if (!isPainting){
+    //     return
+    // }
+
     const thisTouch = event.touches[0]
     rect = clickableCanvas.getBoundingClientRect()
     
