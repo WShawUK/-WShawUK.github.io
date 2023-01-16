@@ -219,6 +219,9 @@ palletSelector.addEventListener('input', (e) => {
 const mainCanvas = document.getElementById('main-canvas')
 const clickableCanvas = document.getElementById('clickable-canvas')
 const mainCTX = mainCanvas.getContext('2d')
+mainCTX.imageSmoothingEnabled = false
+// mainCTX.imageSmoothingQuality = 'high'
+// mainCTX.globalCompositeOperation = "source-over"
 mainCTX.fillStyle = ('rgb(50, 50, 50)')
 mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
 let rect
@@ -250,7 +253,6 @@ function sizeSliderChanges(){
 
 // sizeSliderChanges()
 clickableCanvas.style.setProperty("--cursor", "url('cursor10.png') 5 5")
-
 sizeSlider.addEventListener('change', sizeSliderChanges)
 
 // function getMousePosition(canvas, event) {
@@ -261,13 +263,103 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 // }
 
 
-
 let undoState
+let willFill = false
 const mouseDownEvent = (event) => {
-    isPainting = true
     mainCanvas.toBlob((blob) => {
         undoState = URL.createObjectURL(blob)
     })
+
+    if (willFill){ //  bucket fill 
+        let rect = clickableCanvas.getBoundingClientRect()
+        const initialX = Math.round((event.clientX - rect.left) * 2)
+        const initialY = Math.round((event.clientY - rect.top) * 2)
+
+        const initialPixelData = mainCTX.getImageData(Math.round(initialX), Math.round(initialY), Math.round(initialX), Math.round(initialY)).data
+        const colourToFill = `rgb(${initialPixelData[0]}, ${initialPixelData[1]}, ${initialPixelData[2]})`
+        if (currentColour === `rgb(${initialPixelData[0]}, ${initialPixelData[1]}, ${initialPixelData[2]})`){
+            return
+        }
+
+
+        let queue = [[initialX, initialY]]
+        let cursorX = initialX
+        let cursorY = initialY
+
+        const pixelsMap = mainCTX.getImageData(0, 0, mainCanvas.width, mainCanvas.width)
+        const pixelsMapData = pixelsMap.data
+        const currentColourData = currentColour.slice(4, currentColour.length - 1).split(',')
+        const RToPlace = Number(currentColourData[0])
+        const GToPlace = Number(currentColourData[1])
+        const BToPlace = Number(currentColourData[2])
+
+        const checkColour = function(x, y){
+            if ((x < 0) || (y < 0) || (x > mainCanvas.width) || (y > mainCanvas.height)){
+                return false
+            }
+            
+            let pixelPosition = ((Math.round(y) * mainCanvas.width) + Math.round(x)) * 4
+
+            // console.log(`rgb(${pixelsMapData[pixelPosition]}, ${pixelsMapData[pixelPosition + 1]}, ${pixelsMapData[pixelPosition + 2]})`)
+            return colourToFill === `rgb(${pixelsMapData[pixelPosition]}, ${pixelsMapData[pixelPosition + 1]}, ${pixelsMapData[pixelPosition + 2]})`
+        }
+
+        // and so it begins
+
+        while (queue.length){
+            cursorX = queue[queue.length - 1][0]
+            cursorY = queue[queue.length - 1][1]
+            queue.pop()
+
+            while (checkColour(cursorX, cursorY - 1)){  // find top
+                cursorY -= 1
+            }
+
+            // now starting from top go down and check sides whilst filling
+            let reachLeft = false
+            let reachRight = false
+            while (true){
+                //fill pixel
+                let pixelPosition = ((cursorY * mainCanvas.width) + cursorX) * 4
+                pixelsMapData[pixelPosition] = RToPlace
+                pixelsMapData[pixelPosition + 1] = GToPlace
+                pixelsMapData[pixelPosition + 2] = BToPlace
+                pixelsMapData[pixelPosition + 3] = 255
+
+                if (checkColour(cursorX - 1, cursorY)){  //check if left needs to be added to queue
+                    if (!reachLeft){
+                        queue.push([cursorX - 1, cursorY])
+                        reachLeft = true
+                    }
+                }
+                else{
+                    reachLeft = false
+                }
+
+                // now right
+                if (checkColour(cursorX + 1, cursorY)){  //check if right needs to be added to queue
+                    if (!reachRight){
+                        queue.push([cursorX + 1, cursorY])
+                        reachRight = true
+                    }
+                }
+                else{
+                    reachRight = false
+                }
+
+                //break condition
+                if (!checkColour(cursorX, cursorY + 1)){
+                    break
+                }
+                cursorY += 1
+            }
+        }
+    mainCTX.putImageData(pixelsMap, 0, 0) // place pixelsmap
+    return
+}
+
+    
+    isPainting = true
 
     if (event.shiftKey){  // straight line shift key draw
         isPainting = false
@@ -422,6 +514,7 @@ clickableCanvas.addEventListener('touchmove', (event) => {
     }
     else {
         isPainting = false
+        return
     }
 
     if (!isPainting){
@@ -501,7 +594,20 @@ document.body.addEventListener('touchend', (event) => {
     points = []
 })
 
-// axes, save, clear and undo buttons
+// fill, axes, save, clear and undo buttons
+
+document.getElementById('fill-button').addEventListener('click', (event) => {
+    willFill = (!willFill)
+    if (willFill){
+        document.getElementById('fill-button').style.background = 'rgb(70, 70, 70)'
+        // document.body.style.setProperty('--body-cursor', 'url("bucket-fill-cursor.png")')
+        // clickableCanvas.style.setProperty('--cursor', 'url("bucket-fill-cursor.png") 5')
+    }
+    else{
+        document.getElementById('fill-button').style.background = 'rgb(50, 50, 50)'
+    }
+})
+
 
 document.getElementById('axes-button').addEventListener('click', (e) => {
     moreAxes = !moreAxes
@@ -514,6 +620,7 @@ document.getElementById('axes-button').addEventListener('click', (e) => {
         document.getElementById('axes-button').firstElementChild.setAttribute('src', 'axes4.png')
     }
 })
+document.getElementById('axes-button').click()
 
 document.getElementById('clear-button').addEventListener('click', (e) => {
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
@@ -560,7 +667,7 @@ saveButton.addEventListener('click', (e) => {
 
 const aboutButton = document.getElementById('about-button')
 aboutButton.addEventListener('click', (e) => {
-    document.getElementById('advert-div').scrollIntoView()
+    document.getElementById('info-div').scrollIntoView()
 })
 
 // scroll wheel
