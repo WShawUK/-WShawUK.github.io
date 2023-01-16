@@ -1,9 +1,13 @@
 :root {
+    --body-cursor: auto;
     --cursor: auto;
     --canvas-width: 900px;
+    
+    
 }
 
 body {
+    font-family: poppins;
     display: grid;
     grid-template-columns: auto 1fr 1fr;
     grid-template-rows: auto auto auto auto auto;
@@ -237,7 +241,7 @@ header {
 #small-options-div {
     text-align: center;
     display: grid;
-    grid-template-columns: 50px 1px auto;
+    grid-template-columns: 50px 1px auto auto;
     grid-template-rows: auto auto auto;
     margin: 10px;
     grid-column: 2/3;
@@ -263,6 +267,29 @@ header {
     /* appearance: vertical; */
     outline: none;
     opacity: 0.5;
+}
+
+#fill-button {
+    transition: 0.3s;
+    display: inline-grid;
+    place-content: center;
+    margin: auto;
+    width: 40px;
+    height: 40px;
+    grid-column: 4/5;
+    grid-row: 2/3;
+    background-color: transparent;
+    border: 1px black solid;
+    border-radius: 30%;
+}
+
+#fill-button:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+#bucket-fill-icon {
+    width: 35px;
+    height: 35px;
 }
 
 #size-slider::-webkit-slider-thumb {
@@ -294,7 +321,7 @@ header {
 
 
 #colour-title {
-    grid-column: 3/4;
+    grid-column: 3/5;
     grid-row: 1/2;
     margin: auto 10px;
 }
@@ -304,7 +331,7 @@ header {
     grid-column: 3/4;
     grid-row: 2/3;
     margin: auto;
-    width: 50%;
+    width: 70%;
     height: 30px;
     background-color: rgb(50, 50, 50);
     outline: none;
@@ -315,7 +342,7 @@ header {
 }
 
 #colour-options-div {
-    grid-column: 3/4;
+    grid-column: 3/5;
     grid-row: 3/4;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
