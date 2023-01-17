@@ -263,19 +263,25 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 // }
 
 
-let undoState
+let undoState = []
 let willFill = false
 const mouseDownEvent = (event) => {
     if (event.touches){
         if (event.touches.length === 1){
             mainCanvas.toBlob((blob) => {
-                undoState = URL.createObjectURL(blob)
+                undoState.push(URL.createObjectURL(blob))
+                if (undoState.length >= 10){
+                    undoState.shift()
+                }
             })
         }
     }
     else{
         mainCanvas.toBlob((blob) => {
-            undoState = URL.createObjectURL(blob)
+            undoState.push(URL.createObjectURL(blob))
+            if (undoState.length >= 10){
+                undoState.shift()
+            }
         })
     }
     
@@ -418,8 +424,6 @@ const mouseDownEvent = (event) => {
 
         // mainCTX.closePath()
 
-        lastLastPointX = lastPointX
-        lastLastPointY = lastPointY
         lastPointX = currentX
         lastPointY = currentY
         
@@ -431,8 +435,6 @@ clickableCanvas.addEventListener('touchstart', mouseDownEvent)
 
 let lastPointX
 let lastPointY
-let lastLastPointX
-let lastLastPointY
 
 const mouseUpEvent = (event) => {
     isPainting = false
@@ -643,12 +645,14 @@ document.getElementById('clear-button').addEventListener('click', (e) => {
 
 const undoButton = document.getElementById('undo-button')
 undoButton.addEventListener('click', (e) => {
-    lastPointX = lastLastPointX
-    lastPointY = lastLastPointY
+    if (!undoState.length){
+        return
+    }
     mainCTX.fillStyle = 'rgb(50, 50, 50)'
     mainCTX.fillRect(0, 0, canvasWidth * 2, canvasWidth * 2)
     let imageToLoad = new Image()
-    imageToLoad.src = undoState
+    imageToLoad.src = undoState[undoState.length-1]
+    undoState.pop()
     imageToLoad.addEventListener('load', (e) =>{
         mainCTX.drawImage(imageToLoad, 0, 0, canvasWidth * 2, canvasWidth * 2)
     })
