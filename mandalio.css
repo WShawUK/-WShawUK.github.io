@@ -2,11 +2,10 @@
     --body-cursor: auto;
     --cursor: auto;
     --canvas-width: 900px;
-    
-    
 }
 
 body {
+    cursor: var(--body-cursor);
     font-family: poppins;
     display: grid;
     grid-template-columns: auto 1fr 1fr;
@@ -70,9 +69,6 @@ header {
     margin-left: 5%;
     color: white;
     text-decoration: none;
-}
-
-.nav:hover{
     cursor:pointer;
 }
 
@@ -443,4 +439,5 @@ header {
         margin: 10px auto;
     }
   }
+
 
