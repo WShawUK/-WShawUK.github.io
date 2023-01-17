@@ -266,25 +266,10 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 let undoState = []
 let willFill = false
 const mouseDownEvent = (event) => {
-    if (event.touches){
-        if (event.touches.length === 1){
-            mainCanvas.toBlob((blob) => {
-                undoState.push(URL.createObjectURL(blob))
-                if (undoState.length >= 10){
-                    undoState.shift()
-                }
-            })
-        }
+    undoState.push(URL.createObjectURL(blob))
+    if (undoState.length >= 10){
+        undoState.shift()
     }
-    else{
-        mainCanvas.toBlob((blob) => {
-            undoState.push(URL.createObjectURL(blob))
-            if (undoState.length >= 10){
-                undoState.shift()
-            }
-        })
-    }
-    
 
     if (willFill){ //  bucket fill 
         let rect = clickableCanvas.getBoundingClientRect()
