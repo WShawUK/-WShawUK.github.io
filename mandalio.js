@@ -266,9 +266,19 @@ sizeSlider.addEventListener('change', sizeSliderChanges)
 let undoState
 let willFill = false
 const mouseDownEvent = (event) => {
-    mainCanvas.toBlob((blob) => {
-        undoState = URL.createObjectURL(blob)
-    })
+    if (event.touches){
+        if (event.touches.length === 1){
+            mainCanvas.toBlob((blob) => {
+                undoState = URL.createObjectURL(blob)
+            })
+        }
+    }
+    else{
+        mainCanvas.toBlob((blob) => {
+            undoState = URL.createObjectURL(blob)
+        })
+    }
+    
 
     if (willFill){ //  bucket fill 
         let rect = clickableCanvas.getBoundingClientRect()
@@ -600,11 +610,12 @@ document.getElementById('fill-button').addEventListener('click', (event) => {
     willFill = (!willFill)
     if (willFill){
         document.getElementById('fill-button').style.background = 'rgb(70, 70, 70)'
-        // document.body.style.setProperty('--body-cursor', 'url("bucket-fill-cursor.png")')
-        // clickableCanvas.style.setProperty('--cursor', 'url("bucket-fill-cursor.png") 5')
+        document.body.style.setProperty("--body-cursor", "url('bucket-fill-cursor.png') 50 50")
+        clickableCanvas.style.setProperty("--cursor", "url('bucket-fill-cursor.png') 50 50")
     }
     else{
         document.getElementById('fill-button').style.background = 'rgb(50, 50, 50)'
+        sizeSliderChanges()
     }
 })
 
@@ -672,19 +683,23 @@ aboutButton.addEventListener('click', (e) => {
 
 // scroll wheel
 clickableCanvas.addEventListener('wheel', (event) => {
-    event.preventDefault()
-    event.stopPropagation()
+    if (!event.ctrlKey){
+        event.preventDefault()
+        event.stopPropagation()
 
-    if (isPainting){
-        return
+        if (!willFill){
+            if (isPainting){
+                return
+            }
+    
+            if (event.deltaY < 0){
+                sizeSlider.value = (Number(sizeSlider.value) + 2).toString()
+            }
+            else if (event.deltaY > 0){
+                sizeSlider.value = (Number(sizeSlider.value) - 2).toString()
+            }
+            sizeSliderChanges()
+            // return
+        }
     }
-
-    if (event.deltaY < 0){
-        sizeSlider.value = (Number(sizeSlider.value) + 2).toString()
-    }
-    else if (event.deltaY > 0){
-        sizeSlider.value = (Number(sizeSlider.value) - 2).toString()
-    }
-    sizeSliderChanges()
-    // return
 })
