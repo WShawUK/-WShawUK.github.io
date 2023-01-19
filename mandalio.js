@@ -612,11 +612,9 @@ document.getElementById('fill-button').addEventListener('click', (event) => {
 document.getElementById('axes-button').addEventListener('click', (e) => {
     moreAxes = !moreAxes
     if (moreAxes){
-        console.log('more axes')
         document.getElementById('axes-button').firstElementChild.src = 'axes8.png'
     }
     else {
-        console.log('less axes')
         document.getElementById('axes-button').firstElementChild.setAttribute('src', 'axes4.png')
     }
 })
@@ -662,7 +660,7 @@ saveButton.addEventListener('click', (e) => {
     toDownload.download = mainCanvas.toDataURL()
     document.body.appendChild(toDownload)
     toDownload.click()
-    document.removeChild(toDownload)
+    document.body.removeChild(toDownload)
 })
 
 // nav buttons
